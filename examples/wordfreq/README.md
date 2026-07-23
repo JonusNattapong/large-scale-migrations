@@ -60,3 +60,11 @@ rather than just "roughly the same":
 `parity.sh` exits 0 with every case `PASS`. That green is the whole point: the
 port isn't finished because it compiles — it's finished because it *behaves like
 the original*.
+
+## Results
+
+A captured parity run (dated, with toolchain versions and full output) lives in
+[`results/`](results/) — e.g.
+[`results/2026-07-23-parity.md`](results/2026-07-23-parity.md). This is the
+project's honest equivalent of a benchmark: not "it's faster", but "it provably
+does the same thing".
