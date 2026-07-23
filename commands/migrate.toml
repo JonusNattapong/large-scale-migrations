@@ -1,0 +1,2 @@
+description = "Start or resume a large-scale language migration (six-step process)"
+prompt = "Invoke the code-migration skill and begin the six-step migration process for this repository. Target from the arguments: {{args}}. If no target language is given, first run the feasibility step and ask the user what to migrate to. Follow migration-kit/README.md for the process and migration-kit/CLAUDE.md for the standing rules — queues live on disk, the rulebook is read-only inside loops, and sign-off gates end each phase."

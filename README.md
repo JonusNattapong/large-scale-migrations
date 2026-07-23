@@ -1,59 +1,91 @@
-# large-scale-migrations
+# code-migration — a Claude Code plugin
 
-A Claude Code workspace for **porting a codebase from one language to another**
-(e.g. Python → Rust, C → Go) using Anthropic's six-step migration process.
+Port a codebase from one language to another (e.g. Python → Rust, C → Go) using
+Anthropic's six-step migration process — packaged as an installable **Claude Code
+plugin**. This repo is both the plugin and its marketplace.
 
-## What's in here
+## Install
 
-The repo has two parts and nothing else:
+In Claude Code:
 
-| Folder | Role | Analogy |
-| --- | --- | --- |
-| [`migration-kit/`](migration-kit/) | **How to migrate** — the prompts, rules, templates, and scripts that drive the six-step process | the playbook |
-| [`quality-loop/`](quality-loop/) | **Check the result** — an MCP server that runs your project's gates (tests / lint / build) and loops until green | the grader |
-
-Two Claude skills wire them into Claude Code:
-
-- `.claude/skills/code-migration/` — say "migrate", "port", or "rewrite" (or `Skill("code-migration")`) to run the playbook.
-- `.claude/skills/mcp-quality-loop/` — tells Claude how to drive the grader.
-
-## Setup
-
-Requires **Node.js 18+** (for the quality-loop MCP server) and **Claude Code**.
-
-1. Clone the repo and open it in Claude Code:
-   ```bash
-   git clone <this-repo> && cd large-scale-migrations
-   ```
-2. That's it — no `npm install`. The quality-loop MCP server is zero-dependency
-   and starts automatically from [`.mcp.json`](.mcp.json).
-3. Edit [`quality-loop/config.json`](quality-loop/config.json) to declare your
-   project's gates (the commands Claude is allowed to run):
-   ```json
-   {
-     "checks": [
-       { "name": "tests", "command": "npm test", "description": "Run unit tests" }
-     ]
-   }
-   ```
-
-Verify the server boots:
-```bash
-node quality-loop/server.mjs < /dev/null
 ```
-(no output and a clean exit means it's healthy).
+/plugin marketplace add JonusNattapong/large-scale-migrations
+/plugin install code-migration@large-scale-migrations
+```
 
-## Using it
+Requires **Node.js 18+** for the bundled quality-loop MCP server (zero
+dependencies — nothing to `npm install`).
 
-- **Start a migration:** open Claude Code in the repo and say
-  *"migrate this project to <language>"*. The `code-migration` skill takes over
-  and walks the six steps: feasibility → judge setup → map & rules → stress-test
-  → translate → compile → test → parity.
-- **Check quality any time:** ask Claude to *"run the quality loop"*. It calls the
-  `quality-loop` MCP tool, which runs only the gates in `quality-loop/config.json`.
+Then, in any project, just say:
+
+```
+migrate this project to Rust
+```
+
+or run the slash command `/migrate Rust`.
+
+## What you get
+
+| Component | Role |
+| --- | --- |
+| **`code-migration` skill** | The six-step playbook: feasibility → judge setup → map & rules → stress-test → translate → compile → test → parity |
+| **`mcp-quality-loop` skill** | Teaches Claude to drive the grader below |
+| **`quality-loop` MCP server** | Runs your project's gates (tests / lint / build) and loops until green — only commands you declare, never injected |
+| **`migration-kit/`** | Bundled prompts, rules, templates, and scripts the skill loads |
+
+## Configure your gates
+
+The quality-loop server looks for its config in the **project you run it in**, in
+this order:
+
+1. `$QUALITY_LOOP_CONFIG` (explicit path)
+2. `quality-loop.config.json` in your project root
+3. `mcp-quality-loop.config.json` in your project root
+4. the bundled example (fallback)
+
+Drop a `quality-loop.config.json` in your project to declare the commands Claude
+may run:
+
+```json
+{
+  "checks": [
+    { "name": "tests", "command": "npm test", "description": "Run unit tests" },
+    { "name": "build", "command": "npm run build", "description": "Production build" }
+  ]
+}
+```
+
+Then ask Claude to *"run the quality loop"*.
+
+## Repository layout (plugin structure)
+
+```
+.claude-plugin/
+  plugin.json            # plugin manifest
+  marketplace.json       # marketplace listing (source: "./")
+skills/                  # code-migration + mcp-quality-loop
+commands/migrate.toml    # /migrate slash command
+quality-loop/            # server.mjs (zero-dep MCP) + example config.json
+migration-kit/           # bundled process: prompts, templates, scripts
+.mcp.json                # registers quality-loop via ${CLAUDE_PLUGIN_ROOT}
+docs/                    # background reference
+```
+
+## Local development
+
+Clone and point the marketplace at your working copy, or verify the MCP server
+directly:
+
+```bash
+node quality-loop/server.mjs < /dev/null   # clean exit = healthy
+```
 
 ## Reference
 
-- Six-step process details: [`migration-kit/README.md`](migration-kit/README.md)
-- Standing rules for migration sessions: [`migration-kit/CLAUDE.md`](migration-kit/CLAUDE.md)
-- Background: [How Anthropic runs large-scale code migrations with Claude Code](https://claude.com/blog/ai-code-migration) — and a saved copy in [`docs/`](docs/).
+- Six-step process: [`migration-kit/README.md`](migration-kit/README.md)
+- Standing rules: [`migration-kit/CLAUDE.md`](migration-kit/CLAUDE.md)
+- Background: [How Anthropic runs large-scale code migrations with Claude Code](https://claude.com/blog/ai-code-migration)
+
+## License
+
+MIT

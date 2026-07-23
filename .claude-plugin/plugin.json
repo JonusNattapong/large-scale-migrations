@@ -1,0 +1,12 @@
+{
+  "name": "code-migration",
+  "version": "1.0.0",
+  "description": "Run large-scale language migrations (port a codebase to another language) with Anthropic's six-step process, plus a zero-dependency quality-loop MCP server that runs your project's gates until green.",
+  "author": {
+    "name": "Nattapong Tapachoom",
+    "url": "https://github.com/JonusNattapong"
+  },
+  "homepage": "https://github.com/JonusNattapong/large-scale-migrations",
+  "license": "MIT",
+  "keywords": ["migration", "port", "rewrite", "quality-loop", "mcp"]
+}

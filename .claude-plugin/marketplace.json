@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "large-scale-migrations",
+  "description": "Tools for porting a codebase from one language to another with Claude Code.",
+  "owner": {
+    "name": "Nattapong Tapachoom",
+    "url": "https://github.com/JonusNattapong"
+  },
+  "plugins": [
+    {
+      "name": "code-migration",
+      "description": "Anthropic's six-step language-migration process + a quality-loop MCP server. Say \"migrate this to <language>\" to start.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

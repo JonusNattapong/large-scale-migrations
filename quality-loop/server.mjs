@@ -10,10 +10,12 @@
 //   run   -> run all gates (or a subset via `checks`), return structured results
 //   loop  -> re-run gates up to `maxAttempts` (1..5) until all pass
 //
-// Config resolution order:
+// Config resolution order (user's project wins over the bundled example, so
+// the same installed plugin adapts to whatever project it runs in):
 //   1. $QUALITY_LOOP_CONFIG (absolute or cwd-relative path)
-//   2. ./config.json next to this file
-//   3. ./mcp-quality-loop.config.json at the current working directory (legacy)
+//   2. ./quality-loop.config.json         in the user's project (cwd)
+//   3. ./mcp-quality-loop.config.json     in the user's project (cwd, legacy)
+//   4. ./config.json next to this file    (the bundled default / example)
 
 import { readFileSync, existsSync } from "node:fs";
 import { execSync } from "node:child_process";
@@ -28,8 +30,9 @@ const NAME_RE = /^[A-Za-z0-9._-]+$/;
 function configPath() {
   const candidates = [
     process.env.QUALITY_LOOP_CONFIG && resolve(process.env.QUALITY_LOOP_CONFIG),
-    join(HERE, "config.json"),
+    resolve(process.cwd(), "quality-loop.config.json"),
     resolve(process.cwd(), "mcp-quality-loop.config.json"),
+    join(HERE, "config.json"),
   ].filter(Boolean);
   for (const p of candidates) if (existsSync(p)) return p;
   return null;

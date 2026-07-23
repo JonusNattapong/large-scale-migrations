@@ -2,7 +2,7 @@
   "mcpServers": {
     "quality-loop": {
       "command": "node",
-      "args": ["quality-loop/server.mjs"]
+      "args": ["${CLAUDE_PLUGIN_ROOT}/quality-loop/server.mjs"]
     }
   }
 }
