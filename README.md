@@ -33,6 +33,48 @@ or run the slash command `/migrate Rust`.
 | **`quality-loop` MCP server** | Runs your project's gates (tests / lint / build) and loops until green — only commands you declare, never injected |
 | **`migration-kit/`** | Bundled prompts, rules, templates, and scripts the skill loads |
 
+## MCP setup
+
+The `quality-loop` MCP server is what lets Claude run your tests/build and loop
+until green. **If you install this as a plugin, it is registered automatically** —
+Claude reads the bundled [`.mcp.json`](.mcp.json), expands `${CLAUDE_PLUGIN_ROOT}`,
+and starts the server. Nothing to do.
+
+You only configure MCP by hand if you want to run it **outside** the plugin (e.g.
+local development, or wiring it into another repo). Claude Code registers MCP
+servers at three scopes:
+
+| Scope | File | Use when |
+| --- | --- | --- |
+| **Project** | `.mcp.json` at the repo root | everyone who clones the repo gets the same server |
+| **User (global)** | `~/.claude.json` | you want it in every project on your machine |
+| **Plugin** | `.mcp.json` inside the plugin | ships with the plugin on install (what this repo uses) |
+
+Every scope uses the same shape:
+
+```json
+{
+  "mcpServers": {
+    "quality-loop": {
+      "command": "node",
+      "args": ["quality-loop/server.mjs"]
+    }
+  }
+}
+```
+
+Three ways to add it:
+
+- **Edit `.mcp.json`** directly (as shown above), then reopen the project.
+- **CLI:** `claude mcp add quality-loop -- node quality-loop/server.mjs`
+- **In a session:** run `/mcp` to view status, authorize, or toggle servers.
+
+Verify it is connected with `/mcp` (look for `quality-loop`), or just ask Claude
+to *"run the quality loop"*.
+
+> Note: `${CLAUDE_PLUGIN_ROOT}` only resolves when running as an installed
+> plugin. For plain local dev, use a relative path like `quality-loop/server.mjs`.
+
 ## Configure your gates
 
 The quality-loop server looks for its config in the **project you run it in**, in
