@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "quality-loop": {
+      "command": "node",
+      "args": ["quality-loop/server.mjs"]
+    }
+  }
+}

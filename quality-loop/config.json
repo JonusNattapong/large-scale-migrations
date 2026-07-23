@@ -1,0 +1,10 @@
+{
+  "checks": [
+    {
+      "name": "repository",
+      "command": "git status --short",
+      "timeoutMs": 10000,
+      "description": "Show the working-tree state"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Migration run artifacts (queues, worktrees, logs — regenerated per run)
+.clew/
+worktrees/
+*.log
+cost-log.tsv
+
+# Scratch / local scraping tools
+.firecrawl/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
