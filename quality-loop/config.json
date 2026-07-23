@@ -1,6 +1,24 @@
 {
   "checks": [
     {
+      "name": "mcp-server-syntax",
+      "command": "node --check quality-loop/server.mjs",
+      "timeoutMs": 15000,
+      "description": "The quality-loop MCP server parses as valid JavaScript"
+    },
+    {
+      "name": "config-valid",
+      "command": "node -e \"JSON.parse(require('fs').readFileSync('quality-loop/config.json','utf8'))\"",
+      "timeoutMs": 15000,
+      "description": "quality-loop/config.json is valid JSON"
+    },
+    {
+      "name": "mcp-json-valid",
+      "command": "node -e \"JSON.parse(require('fs').readFileSync('.mcp.json','utf8'))\"",
+      "timeoutMs": 15000,
+      "description": ".mcp.json is valid JSON"
+    },
+    {
       "name": "repository",
       "command": "git status --short",
       "timeoutMs": 10000,
