@@ -57,20 +57,6 @@ may run:
 
 Then ask Claude to *"run the quality loop"*.
 
-## Repository layout (plugin structure)
-
-```
-.claude-plugin/
-  plugin.json            # plugin manifest
-  marketplace.json       # marketplace listing (source: "./")
-skills/                  # code-migration + mcp-quality-loop
-commands/migrate.toml    # /migrate slash command
-quality-loop/            # server.mjs (zero-dep MCP) + example config.json
-migration-kit/           # bundled process: prompts, templates, scripts
-.mcp.json                # registers quality-loop via ${CLAUDE_PLUGIN_ROOT}
-docs/                    # background reference
-```
-
 ## Local development
 
 Clone and point the marketplace at your working copy, or verify the MCP server
