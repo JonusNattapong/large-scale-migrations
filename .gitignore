@@ -2,6 +2,9 @@
 node_modules/
 npm-debug.log*
 
+# Rust build output (examples)
+target/
+
 # Migration run artifacts (queues, worktrees, logs — regenerated per run)
 .clew/
 worktrees/

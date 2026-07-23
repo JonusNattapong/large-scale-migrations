@@ -1,0 +1,6 @@
+The quick brown fox jumps over the lazy dog.
+The dog was not amused, but the fox was quick to apologize.
+Quick thinking and a quick apology: the fox knew the dog would forgive.
+A dog, a fox, and a lazy afternoon in the sun.
+Word counts do not care about CASE or Punctuation!!! word Word WORD.
+Numbers like 42 and 42 and 007 show up too, 42 times over.

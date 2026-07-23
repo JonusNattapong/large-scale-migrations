@@ -108,6 +108,13 @@ directly:
 node quality-loop/server.mjs < /dev/null   # clean exit = healthy
 ```
 
+## Example
+
+A complete, runnable migration lives in
+[`examples/wordfreq/`](examples/wordfreq/) — a small Python CLI ported to Rust,
+with a `parity.sh` harness that proves the port produces byte-identical output.
+It's the six-step process in miniature.
+
 ## Reference
 
 - Six-step process: [`migration-kit/README.md`](migration-kit/README.md)
